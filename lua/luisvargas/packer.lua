@@ -87,9 +87,5 @@ return require('packer').startup(function(use)
 		run = 'yarn install',
 		ft = { 'javascript', 'typescript', 'css', 'less', 'scss', 'graphql', 'markdown', 'vue', 'html' },
 	}
-	use {
-		"pmizio/typescript-tools.nvim",
-		requires = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
-	}
 	use('danarth/sonarlint.nvim')
 end)
