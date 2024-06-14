@@ -59,3 +59,14 @@ vim.keymap.set('n', '<leader>go', function() vim.cmd('Telescope git_status') end
 vim.keymap.set('n', '<leader>gb', function() vim.cmd('Telescope git_branches') end, { noremap = true, silent = true })
 vim.keymap.set('n', '<leader>gc', function() vim.cmd('Telescope git_commits') end, { noremap = true, silent = true })
 vim.keymap.set('n', '<leader>gd', function() vim.cmd('Gitsigns diffthis HEAD') end, { noremap = true, silent = true })
+
+local opts = { noremap = true, silent = true }
+
+local function quickfix()
+	vim.lsp.buf.code_action({
+		filter = function(a) return a.isPreferred end,
+		apply = true
+	})
+end
+
+vim.keymap.set('n', '<leader>qf', quickfix, opts)
