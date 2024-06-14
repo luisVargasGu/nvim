@@ -37,7 +37,7 @@ local function organize_imports()
 	vim.lsp.buf.execute_command(params)
 end
 
-require('lspconfig').tsserver.setup {
+lspconfig.tsserver.setup {
 	on_attach = on_attach,
 	capabilities = capabilities,
 	commands = {
@@ -48,16 +48,16 @@ require('lspconfig').tsserver.setup {
 	}
 }
 
-require('lspconfig').html.setup {
+lspconfig.html.setup {
 	capabilities = capabilities,
 }
-require('lspconfig').cssls.setup {
+lspconfig.cssls.setup {
 	capabilities = capabilities,
 }
 
-require('lspconfig').angularls.setup {}
+lspconfig.angularls.setup {}
 
-require('lspconfig').ocamllsp.setup({
+lspconfig.ocamllsp.setup({
 	cmd = { "ocamllsp" },
 	filetypes = { "ocaml", "ocaml.menhir", "ocaml.interface", "ocaml.ocamllex", "reason", "dune" },
 	capabilities = capabilities
