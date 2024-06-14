@@ -86,15 +86,9 @@ return require('packer').startup(function(use)
 		'prettier/vim-prettier',
 		run = 'yarn install',
 		ft = { 'javascript', 'typescript', 'css', 'less', 'scss', 'graphql', 'markdown', 'vue', 'html' },
-		config = function()
-			vim.api.nvim_set_keymap('n', '<leader>f', ':Prettier<CR>', { noremap = true, silent = true })
-		end
 	}
 	use {
 		"pmizio/typescript-tools.nvim",
 		requires = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
-		config = function()
-			require("typescript-tools").setup {}
-		end,
 	}
 end)
