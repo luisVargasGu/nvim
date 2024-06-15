@@ -65,19 +65,23 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
 		vim.keymap.set('n', '<space>f', function()
 			vim.lsp.buf.format { async = true }
-			if vim.fn.exists(":TypescriptFixAll") then
-				vim.cmd("TypescriptFixAll!")
-				vim.cmd("TypescriptRemoveUnused!")
-				vim.cmd("TypescriptOrganizeImports!")
-				return nil
-			end
 		end, opts)
+	end,
+})
+
+local autocmd = vim.api.nvim_create_autocmd
+autocmd('BufWritePre', {
+	pattern = '*.ts,*.tsx,*.jsx,*.js',
+	callback = function(args)
+		vim.cmd 'TSToolsAddMissingImports sync'
+		vim.cmd 'TSToolsOrganizeImports sync'
+		require('conform').format { bufnr = args.buf }
 	end,
 })
 
 require('mason').setup({})
 require('mason-lspconfig').setup({
-	ensure_installed = { 'tsserver', 'html', 'angularls', 'bashls', 'cssls', 'eslint', 'rust_analyzer' },
+	ensure_installed = { 'html', 'angularls', 'bashls', 'cssls', 'eslint', 'rust_analyzer' },
 	handlers = {
 		lsp_zero.default_setup,
 		lua_ls = function()
@@ -86,36 +90,3 @@ require('mason-lspconfig').setup({
 		end,
 	}
 })
-
-require('sonarlint').setup({
-	server = {
-		cmd = {
-			'sonarlint-language-server',
-			-- Ensure that sonarlint-language-server uses stdio channel
-			'-stdio',
-			'-analyzers',
-			-- paths to the analyzers you need, using those for python and java in this example
-			vim.fn.expand("$MASON/share/sonarlint-analyzers/sonarpython.jar"),
-			vim.fn.expand("$MASON/share/sonarlint-analyzers/sonarcfamily.jar"),
-			vim.fn.expand("$MASON/share/sonarlint-analyzers/sonarhtml.jar"),
-			vim.fn.expand("$MASON/share/sonarlint-analyzers/sonarjs.jar"),
-		},
-		settings = {
-			-- The default for sonarlint is {}, this is just an example
-			sonarlint = {
-				rules = {
-					['typescript:S101'] = { level = 'on', parameters = { format = '^[A-Z][a-zA-Z0-9]*$' } },
-					['typescript:S103'] = { level = 'on', parameters = { maximumLineLength = 180 } },
-					['typescript:S106'] = { level = 'on' },
-					['typescript:S107'] = { level = 'on', parameters = { maximumFunctionParameters = 7 } }
-				}
-			}
-		}
-	},
-	filetypes = {
-		'javascript', 'javascriptreact', 'javascript.jsx',
-		'typescript', 'typescriptreact', 'typescript.tsx',
-	},
-	auto_attach = true,
-})
-
