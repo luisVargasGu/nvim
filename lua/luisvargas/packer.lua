@@ -88,5 +88,11 @@ return require('packer').startup(function(use)
 		ft = { 'javascript', 'typescript', 'css', 'less', 'scss', 'graphql', 'markdown', 'vue', 'html' },
 	}
 	use('danarth/sonarlint.nvim')
-	use('jose-elias-alvarez/typescript.nvim')
+	use {
+		"pmizio/typescript-tools.nvim",
+		requires = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+	}
+	use({
+		"stevearc/conform.nvim",
+	})
 end)
