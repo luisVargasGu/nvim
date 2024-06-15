@@ -88,4 +88,5 @@ return require('packer').startup(function(use)
 		ft = { 'javascript', 'typescript', 'css', 'less', 'scss', 'graphql', 'markdown', 'vue', 'html' },
 	}
 	use('danarth/sonarlint.nvim')
+	use('jose-elias-alvarez/typescript.nvim')
 end)

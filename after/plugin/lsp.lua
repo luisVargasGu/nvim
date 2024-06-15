@@ -28,26 +28,6 @@ require("lspconfig").lua_ls.setup {
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-local function organize_imports()
-	local params = {
-		command = "_typescript.organizeImports",
-		arguments = { vim.api.nvim_buf_get_name(0) },
-		title = ""
-	}
-	vim.lsp.buf.execute_command(params)
-end
-
-lspconfig.tsserver.setup {
-	on_attach = on_attach,
-	capabilities = capabilities,
-	commands = {
-		OrganizeImports = {
-			organize_imports,
-			description = "Organize Imports"
-		}
-	}
-}
-
 lspconfig.html.setup {
 	capabilities = capabilities,
 }
@@ -85,6 +65,12 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
 		vim.keymap.set('n', '<space>f', function()
 			vim.lsp.buf.format { async = true }
+			if vim.fn.exists(":TypescriptFixAll") then
+				vim.cmd("TypescriptFixAll!")
+				vim.cmd("TypescriptRemoveUnused!")
+				vim.cmd("TypescriptOrganizeImports!")
+				return nil
+			end
 		end, opts)
 	end,
 })
@@ -100,3 +86,36 @@ require('mason-lspconfig').setup({
 		end,
 	}
 })
+
+require('sonarlint').setup({
+	server = {
+		cmd = {
+			'sonarlint-language-server',
+			-- Ensure that sonarlint-language-server uses stdio channel
+			'-stdio',
+			'-analyzers',
+			-- paths to the analyzers you need, using those for python and java in this example
+			vim.fn.expand("$MASON/share/sonarlint-analyzers/sonarpython.jar"),
+			vim.fn.expand("$MASON/share/sonarlint-analyzers/sonarcfamily.jar"),
+			vim.fn.expand("$MASON/share/sonarlint-analyzers/sonarhtml.jar"),
+			vim.fn.expand("$MASON/share/sonarlint-analyzers/sonarjs.jar"),
+		},
+		settings = {
+			-- The default for sonarlint is {}, this is just an example
+			sonarlint = {
+				rules = {
+					['typescript:S101'] = { level = 'on', parameters = { format = '^[A-Z][a-zA-Z0-9]*$' } },
+					['typescript:S103'] = { level = 'on', parameters = { maximumLineLength = 180 } },
+					['typescript:S106'] = { level = 'on' },
+					['typescript:S107'] = { level = 'on', parameters = { maximumFunctionParameters = 7 } }
+				}
+			}
+		}
+	},
+	filetypes = {
+		'javascript', 'javascriptreact', 'javascript.jsx',
+		'typescript', 'typescriptreact', 'typescript.tsx',
+	},
+	auto_attach = true,
+})
+

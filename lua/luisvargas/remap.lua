@@ -46,20 +46,6 @@ vim.keymap.set("n", "<leader><leader>", function()
     vim.cmd("so")
 end)
 
--- Git remaps
-vim.keymap.set('n', '<leader>gj', function() gitsigns.next_hunk() end, { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>gk', function() gitsigns.prev_hunk() end, { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>gl', function() gitsigns.blame_line() end, { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>gp', function() gitsigns.preview_hunk() end, { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>gr', function() gitsigns.reset_hunk() end, { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>gR', function() gitsigns.reset_buffer() end, { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>gs', function() gitsigns.stage_hunk() end, { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>gu', function() gitsigns.undo_stage_hunk() end, { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>go', function() vim.cmd('Telescope git_status') end, { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>gb', function() vim.cmd('Telescope git_branches') end, { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>gc', function() vim.cmd('Telescope git_commits') end, { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>gd', function() vim.cmd('Gitsigns diffthis HEAD') end, { noremap = true, silent = true })
-
 local opts = { noremap = true, silent = true }
 
 local function quickfix()
