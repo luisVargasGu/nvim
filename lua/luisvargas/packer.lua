@@ -8,7 +8,7 @@ return require('packer').startup(function(use)
 	use 'wbthomason/packer.nvim'
 
 	use {
-		'nvim-telescope/telescope.nvim', tag = '0.1.4',
+		'nvim-telescope/telescope.nvim', tag = '0.1.6',
 		-- or                            , branch = '0.1.x',
 		requires = { { 'nvim-lua/plenary.nvim' } }
 	}
@@ -77,11 +77,6 @@ return require('packer').startup(function(use)
 		requires = { "mfussenegger/nvim-dap" }
 	}
 	use('theHamsta/nvim-dap-virtual-text')
-	use {
-		"microsoft/vscode-js-debug",
-		opt = true,
-		run = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out"
-	}
 	use {
 		'prettier/vim-prettier',
 		run = 'yarn install',
