@@ -74,7 +74,7 @@ require('gitsigns').setup {
 		vim.keymap.set('n', '<leader>gr', function() gitsigns.reset_hunk() end, { noremap = true, silent = true })
 		vim.keymap.set('n', '<leader>gR', function() gitsigns.reset_buffer() end,
 			{ noremap = true, silent = true })
-		vim.keymap.set('n', '<leader>gs', function() gitsigns.stage_hunk() end, { noremap = true, silent = true })
+		vim.keymap.set('n', '<leader>gs', function() gitsigns.stage_buffer() end, { noremap = true, silent = true })
 		vim.keymap.set('n', '<leader>gu', function() gitsigns.undo_stage_hunk() end,
 			{ noremap = true, silent = true })
 		vim.keymap.set('n', '<leader>go', function() vim.cmd('Telescope git_status') end,
