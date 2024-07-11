@@ -27,8 +27,11 @@ require('gitsigns').setup {
 	auto_attach = true,
 	attach_to_untracked = true,
 	current_line_blame = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
-	current_line_blame_formatter_opts = {
-		relative_time = false,
+	current_line_blame_opts = {
+		virt_text = true,
+		virt_text_pos = "eol", -- 'eol' | 'overlay' | 'right_align'
+		delay = 1000,
+		ignore_whitespace = false,
 	},
 	sign_priority = 6,
 	update_debounce = 100,
