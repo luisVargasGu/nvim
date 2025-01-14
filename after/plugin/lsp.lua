@@ -31,8 +31,24 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 lspconfig.html.setup {
 	capabilities = capabilities,
 }
+
 lspconfig.cssls.setup {
 	capabilities = capabilities,
+}
+
+lspconfig.clangd.setup {
+    cmd = { "/opt/homebrew/opt/llvm/bin/clangd", "--background-index" },
+    root_dir = lspconfig.util.root_pattern("compile_commands.json", ".clangd"),
+}
+
+lspconfig.helm_ls.setup {
+  settings = {
+    ['helm-ls'] = {
+      yamlls = {
+        path = "yaml-language-server",
+      }
+    }
+  }
 }
 
 lspconfig.angularls.setup {}

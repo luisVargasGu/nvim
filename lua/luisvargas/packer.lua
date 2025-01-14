@@ -47,7 +47,6 @@ return require('packer').startup(function(use)
 		}
 	}
 	use('mattn/emmet-vim')
-	use('github/copilot.vim')
 	use('jiangmiao/auto-pairs')
 	use('tpope/vim-commentary')
 	use({
@@ -71,7 +70,12 @@ return require('packer').startup(function(use)
 	}
 	use('nvim-neotest/nvim-nio')
 	use('mfussenegger/nvim-dap')
-	use('mxsdev/nvim-dap-vscode-js')
+	use { "mxsdev/nvim-dap-vscode-js", requires = {"mfussenegger/nvim-dap"} }
+	use {
+		"microsoft/vscode-js-debug",
+		opt = true,
+		run = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out"
+	}
 	use {
 		'rcarriga/nvim-dap-ui',
 		requires = { "mfussenegger/nvim-dap" }
